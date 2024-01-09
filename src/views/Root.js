@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
 import { Wrapper } from './Root.styles';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { users as usersData } from 'data/users';
 import MainTemplate from 'components/templates/MainTemplate/MainTemplate';
 import AddUser from 'views/AddUser';
@@ -50,14 +50,13 @@ const Root = () => {
         <GlobalStyle />
         <MainTemplate>
           <Wrapper>
-            <Switch>
-              <Route path="/add-user">
-                <AddUser formValues={formValues} handleAddUser={handleAddUser} handleInputChange={handleInputChange} />
-              </Route>
-              <Route path="/">
-                <Dashboard deleteUser={deleteUser} users={users} />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route
+                path="/add-user"
+                element={<AddUser formValues={formValues} handleAddUser={handleAddUser} handleInputChange={handleInputChange} />}
+              ></Route>
+              <Route path="/" element={<Dashboard deleteUser={deleteUser} users={users} />}></Route>
+            </Routes>
           </Wrapper>
         </MainTemplate>
       </ThemeProvider>
