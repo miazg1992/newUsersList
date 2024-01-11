@@ -9,39 +9,31 @@ import MainTemplate from 'components/templates/MainTemplate/MainTemplate';
 import AddUser from 'views/AddUser';
 import Dashboard from 'views/Dashboard';
 
-const initialFormState = {
-  name: '',
-  attendance: '',
-  average: '',
-};
+export const UsersContext = React.createContext({
+  users: [],
+  handleAddUser: () => {},
+  deleteUser: () => {},
+});
 
 const Root = () => {
   const [users, setUsers] = useState(usersData);
-  const [formValues, setFormValues] = useState(initialFormState);
+
+  const handleAddUser = (values) => {
+    console.log('dodawanie w root ' + values);
+    const newUser = {
+      name: values.name,
+      attendance: values.attendance,
+      average: values.average,
+    };
+    setUsers([newUser, ...users]);
+    console.log(users);
+  };
 
   const deleteUser = (name) => {
+    console.log('usunąć' + name);
     const filteredUsers = users.filter((user) => user.name !== name);
     setUsers(filteredUsers);
-  };
-
-  const handleInputChange = (e) => {
-    console.log(formValues);
-    setFormValues({
-      ...formValues,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleAddUser = (e) => {
-    e.preventDefault();
-    const newUser = {
-      name: formValues.name,
-      attendance: formValues.attendance,
-      average: formValues.average,
-    };
-
-    setUsers([newUser, ...users]);
-    setFormValues(initialFormState);
+    console.log(users);
   };
 
   return (
@@ -49,15 +41,20 @@ const Root = () => {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <MainTemplate>
-          <Wrapper>
-            <Routes>
-              <Route
-                path="/add-user"
-                element={<AddUser formValues={formValues} handleAddUser={handleAddUser} handleInputChange={handleInputChange} />}
-              ></Route>
-              <Route path="/" element={<Dashboard deleteUser={deleteUser} users={users} />}></Route>
-            </Routes>
-          </Wrapper>
+          <UsersContext.Provider
+            value={{
+              users: usersData,
+              handleAddUser,
+              deleteUser,
+            }}
+          >
+            <Wrapper>
+              <Routes>
+                <Route path="/add-user" element={<AddUser />}></Route>
+                <Route path="/" element={<Dashboard />}></Route>
+              </Routes>
+            </Wrapper>
+          </UsersContext.Provider>
         </MainTemplate>
       </ThemeProvider>
     </Router>
