@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
@@ -8,12 +8,7 @@ import { users as usersData } from 'data/users';
 import MainTemplate from 'components/templates/MainTemplate/MainTemplate';
 import AddUser from 'views/AddUser';
 import Dashboard from 'views/Dashboard';
-
-export const UsersContext = React.createContext({
-  users: [],
-  handleAddUser: () => {},
-  deleteUser: () => {},
-});
+import UsersProvider from 'providers/UsersProvider';
 
 const Root = () => {
   const [users, setUsers] = useState(usersData);
@@ -44,13 +39,14 @@ const Root = () => {
               deleteUser,
             }}
           >
+          <UsersProvider>
             <Wrapper>
               <Routes>
                 <Route path="/add-user" element={<AddUser />}></Route>
                 <Route path="/" element={<Dashboard />}></Route>
               </Routes>
             </Wrapper>
-          </UsersContext.Provider>
+          </UsersProvider>
         </MainTemplate>
       </ThemeProvider>
     </Router>
