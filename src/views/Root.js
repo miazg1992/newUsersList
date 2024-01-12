@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
 import { Wrapper } from './Root.styles';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { users as usersData } from 'data/users';
 import MainTemplate from 'components/templates/MainTemplate/MainTemplate';
 import AddUser from 'views/AddUser';
@@ -49,10 +49,14 @@ const Root = () => {
             }}
           >
             <Wrapper>
-              <Routes>
-                <Route path="/add-user" element={<AddUser />}></Route>
-                <Route path="/" element={<Dashboard />}></Route>
-              </Routes>
+              <Switch>
+                <Route path="/add-user">
+                  <AddUser />
+                </Route>
+                <Route path="/">
+                  <Dashboard />
+                </Route>
+              </Switch>
             </Wrapper>
           </UsersContext.Provider>
         </MainTemplate>
