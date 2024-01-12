@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
 import { Wrapper } from './Root.styles';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { users as usersData } from 'data/users';
 import MainTemplate from 'components/templates/MainTemplate/MainTemplate';
 import AddUser from 'views/AddUser';
@@ -19,21 +19,17 @@ const Root = () => {
   const [users, setUsers] = useState(usersData);
 
   const handleAddUser = (values) => {
-    console.log('dodawanie w root ' + values);
     const newUser = {
       name: values.name,
       attendance: values.attendance,
       average: values.average,
     };
     setUsers([newUser, ...users]);
-    console.log(users);
   };
 
   const deleteUser = (name) => {
-    console.log('usunąć' + name);
     const filteredUsers = users.filter((user) => user.name !== name);
     setUsers(filteredUsers);
-    console.log(users);
   };
 
   return (
@@ -43,20 +39,16 @@ const Root = () => {
         <MainTemplate>
           <UsersContext.Provider
             value={{
-              users: usersData,
+              users,
               handleAddUser,
               deleteUser,
             }}
           >
             <Wrapper>
-              <Switch>
-                <Route path="/add-user">
-                  <AddUser />
-                </Route>
-                <Route path="/">
-                  <Dashboard />
-                </Route>
-              </Switch>
+              <Routes>
+                <Route path="/add-user" element={<AddUser />}></Route>
+                <Route path="/" element={<Dashboard />}></Route>
+              </Routes>
             </Wrapper>
           </UsersContext.Provider>
         </MainTemplate>
