@@ -4,7 +4,7 @@ import UsersListItem from 'components/molecules/UsersListItem/UsersListItem';
 import { StyledList } from './UsersList.styles';
 import { UserShape } from 'types';
 import { Title } from 'components/atoms/Title/Title';
-import { UsersContext } from 'views/Root';
+// import { UsersContext } from 'views/Root';
 
 const UsersList = ({ users }) => {
   return (
