@@ -3,7 +3,9 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
 import { Wrapper } from './Root.styles';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import MainTemplate from 'components/templates/MainTemplate/MainTemplate';
 import AddUser from 'views/AddUser';
 import Dashboard from 'views/Dashboard';
@@ -17,14 +19,10 @@ const Root = () => {
         <MainTemplate>
           <UsersProvider>
             <Wrapper>
-              <Switch>
-                <Route path="/add-user">
-                  <AddUser />
-                </Route>
-                <Route path="/">
-                  <Dashboard />
-                </Route>
-              </Switch>
+              <Routes>
+                <Route path="/add-user" element={<AddUser />}></Route>
+                <Route path="/" element={<Dashboard />}></Route>
+              </Routes>
             </Wrapper>
           </UsersProvider>
         </MainTemplate>
