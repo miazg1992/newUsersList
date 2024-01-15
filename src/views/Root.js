@@ -12,11 +12,34 @@ import Dashboard from 'views/Dashboard';
 import UsersProvider from 'providers/UsersProvider';
 
 const Root = () => {
+  const [users, setUsers] = useState(usersData);
+
+  const handleAddUser = (values) => {
+    const newUser = {
+      name: values.name,
+      attendance: values.attendance,
+      average: values.average,
+    };
+    setUsers([newUser, ...users]);
+  };
+
+  const deleteUser = (name) => {
+    const filteredUsers = users.filter((user) => user.name !== name);
+    setUsers(filteredUsers);
+  };
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <MainTemplate>
+          <UsersContext.Provider
+            value={{
+              users,
+              handleAddUser,
+              deleteUser,
+            }}
+          >
           <UsersProvider>
             <Wrapper>
               <Routes>
