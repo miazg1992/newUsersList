@@ -20,7 +20,6 @@ const AddUser = () => {
   const context = useContext(UsersContext);
 
   const handleInputChange = (e) => {
-    console.log(formValues);
     setFormValues({
       ...formValues,
       [e.target.name]: e.target.value,
@@ -29,8 +28,8 @@ const AddUser = () => {
 
   const handleSubmitUser = (e) => {
     e.preventDefault();
-    console.log('dodawanie użytkownika');
     context.handleAddUser(formValues);
+    setFormValues(initialFormState);
   };
   return (
     <ViewWrapper>
