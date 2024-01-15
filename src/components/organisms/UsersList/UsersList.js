@@ -19,8 +19,4 @@ const UsersList = ({ users }) => {
   );
 };
 
-UsersList.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape(UserShape)),
-};
-
 export default UsersList;
